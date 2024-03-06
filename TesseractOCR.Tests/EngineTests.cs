@@ -169,7 +169,7 @@ namespace Tesseract.Tests
         public void CanParseUznFile()
         {
             using var engine = CreateEngine();
-            var inputFilename = TestFilePath(@"Ocr\uzn-test.png");
+            var inputFilename = TestFilePath("Ocr/uzn-test.png");
             using var img = TesseractOCR.Pix.Image.LoadFromFile(inputFilename);
             using var page = engine.Process(img, PageSegMode.AutoOnly);
             var text = page.Text;
@@ -311,7 +311,7 @@ namespace Tesseract.Tests
         [TestMethod]
         public void CanProcessPixUsingResultIterator()
         {
-            const string resultPath = @"EngineTests\CanProcessPixUsingResultIterator.txt";
+            const string resultPath = "EngineTests/CanProcessPixUsingResultIterator.txt";
             var result = new StringBuilder();
 
             using var engine = CreateEngine();
@@ -641,7 +641,7 @@ namespace Tesseract.Tests
         [ExpectedException(typeof(TesseractException))]
         public void Initialize_ShouldThrowErrorIfDatapathNotCorrect()
         {
-            using var engine = new Engine(AbsolutePath(@"./IDontExist"), Language.English);
+            using var engine = new Engine(AbsolutePath("./IDontExist"), Language.English);
         }
         
         #region Variable set\get
@@ -743,7 +743,7 @@ namespace Tesseract.Tests
         [TestMethod]
         public void CanPrintVariables()
         {
-            const string resultFilename = @"EngineTests\CanPrintVariables.txt";
+            const string resultFilename = "EngineTests/CanPrintVariables.txt";
 
             using var engine = CreateEngine();
             var actualResultsFilename = TestResultRunFile(resultFilename);

@@ -12,8 +12,8 @@ namespace Tesseract.Tests
     public class AnalyseResultTests : TesseractTestBase
     {
         #region Fields
-        private static string ResultsDirectory => TestResultPath(@"Analysis\");
-        private const string ExampleImagePath = @"Ocr\phototest.tif";
+        private static string ResultsDirectory => TestResultPath("Analysis/");
+        private const string ExampleImagePath = "Ocr/phototest.tif";
         #endregion
 
         #region Setup\TearDown
@@ -43,7 +43,7 @@ namespace Tesseract.Tests
         {
             using var img = LoadTestImage(ExampleImagePath);
             using var rotatedImage = angle.HasValue ? img.Rotate(TesseractOCR.Helpers.Math.ToRadians(angle.Value)) : img.Clone();
-            rotatedImage.Save(TestResultRunFile($@"AnalyseResult\AnalyseLayout_RotateImage_{angle}.png"));
+            rotatedImage.Save(TestResultRunFile($"AnalyseResult/AnalyseLayout_RotateImage_{angle}.png"));
 
             _engine.DefaultPageSegMode = PageSegMode.AutoOsd;
             using var page = _engine.Process(rotatedImage);

@@ -15,7 +15,7 @@ namespace Tesseract.Tests.Leptonica.PixTests
         [TestMethod]
         public void CanAddPixToPixArray()
         {
-            var sourcePixPath = TestFilePath(@"Ocr\phototest.tif");
+            var sourcePixPath = TestFilePath("Ocr/phototest.tif");
             using var pixA = TesseractOCR.Pix.Array.Create(0);
             using var sourcePix = TesseractOCR.Pix.Image.LoadFromFile(sourcePixPath);
             pixA.Add(sourcePix);
@@ -27,7 +27,7 @@ namespace Tesseract.Tests.Leptonica.PixTests
         [TestMethod]
         public void CanRemovePixFromArray()
         {
-            var sourcePixPath = TestFilePath(@"Ocr\phototest.tif");
+            var sourcePixPath = TestFilePath("Ocr/phototest.tif");
             using var pixA = TesseractOCR.Pix.Array.Create(0);
             using (var sourcePix = TesseractOCR.Pix.Image.LoadFromFile(sourcePixPath))
             {
@@ -41,7 +41,7 @@ namespace Tesseract.Tests.Leptonica.PixTests
         [TestMethod]
         public void CanClearPixArray()
         {
-            var sourcePixPath = TestFilePath(@"Ocr\phototest.tif");
+            var sourcePixPath = TestFilePath("Ocr/phototest.tif");
             using var pixA = TesseractOCR.Pix.Array.Create(0);
             using (var sourcePix = TesseractOCR.Pix.Image.LoadFromFile(sourcePixPath))
             {
