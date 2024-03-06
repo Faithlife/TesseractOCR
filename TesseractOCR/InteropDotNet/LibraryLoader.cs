@@ -28,6 +28,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using TesseractOCR.Helpers;
 using static System.String;
 using File = System.IO.File;
@@ -50,7 +51,7 @@ namespace TesseractOCR.InteropDotNet
         /// <summary>
         ///     Uses an alternative search path
         /// </summary>
-        public string CustomSearchPath { get; set; }
+        public string CustomSearchPath { get; set; } = RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? "/opt/homebrew/lib" : null;
         #endregion
 
         /// <summary>
@@ -138,6 +139,9 @@ namespace TesseractOCR.InteropDotNet
 
                 if (dllHandle == IntPtr.Zero)
                     dllHandle = CheckCustomSearchPath(fileName, platformName);
+
+                if (dllHandle == IntPtr.Zero)
+                    dllHandle = CheckCustomSearchPath(fileName, "");
 
                 if (dllHandle != IntPtr.Zero)
                     _loadedAssemblies[fileName] = dllHandle;
