@@ -271,17 +271,17 @@ namespace Tesseract.Tests
 
             }
 
-            Assert.AreEqual(result.ToString(), "Block text: \r\n" +
-                                               "Block confidence: 0\r\n" +
-                                               "Paragraph text: \r\n" +
-                                               "Paragraph confidence: 0\r\n" +
-                                               "Text line text: \r\n" +
-                                               "Text line confidence: 0\r\n" +
-                                               "Word text: \r\n" +
-                                               "Word confidence: 0\r\n" +
-                                               "Word is from dictionary: False\r\n" +
-                                               "Word is numeric: False\r\n" +
-                                               "Word language: Unknown\r\n");
+            Assert.AreEqual(("Block text: \r\n" +
+                             "Block confidence: 0\r\n" +
+                             "Paragraph text: \r\n" +
+                             "Paragraph confidence: 0\r\n" +
+                             "Text line text: \r\n" +
+                             "Text line confidence: 0\r\n" +
+                             "Word text: \r\n" +
+                             "Word confidence: 0\r\n" +
+                             "Word is from dictionary: False\r\n" +
+                             "Word is numeric: False\r\n" +
+                             "Word language: Unknown\r\n").ReplaceLineEndings(), result.ToString());
         }
 
         [TestMethod]
