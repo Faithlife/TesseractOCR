@@ -51,7 +51,10 @@ namespace TesseractOCR.InteropDotNet
         /// <summary>
         ///     Uses an alternative search path
         /// </summary>
-        public string CustomSearchPath { get; set; } = RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? "/opt/homebrew/lib" : null;
+        public string CustomSearchPath { get; set; } =
+            RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? "/opt/homebrew/lib" :
+            RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? $"/usr/lib/{GetLinuxArch(RuntimeInformation.ProcessArchitecture)}-linux-gnu" :
+            null;
         #endregion
 
         /// <summary>
@@ -312,5 +315,14 @@ namespace TesseractOCR.InteropDotNet
             return _logic.FixUpLibraryName(fileName);
         }
         #endregion
+
+        private static string GetLinuxArch(Architecture arch) =>
+            arch switch
+            {
+                Architecture.X86 => "x86",
+                Architecture.X64 => "x86_64",
+                Architecture.Arm64 => "aarch64",
+                _ => arch.ToString(),
+            };
     }
 }
