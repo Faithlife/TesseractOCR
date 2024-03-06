@@ -110,7 +110,14 @@ namespace TesseractOCR.InteropDotNet
         #region FixUpLibraryName
         public string FixUpLibraryName(string fileName)
         {
-            if (!string.IsNullOrEmpty(fileName) && !fileName.EndsWith(".dll", StringComparison.OrdinalIgnoreCase))
+            if (string.IsNullOrEmpty(fileName))
+                throw new ArgumentException(null, nameof(fileName));
+            // hard code these because the versions are embedded in the names
+            if (fileName is "leptonica")
+                return "leptonica-1.83.1.dll";
+            if (fileName is "tesseract")
+                return "tesseract53.dll";
+            if (!fileName.EndsWith(".dll", StringComparison.OrdinalIgnoreCase))
                 return fileName + ".dll";
             return fileName;
         }
