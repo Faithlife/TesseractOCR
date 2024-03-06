@@ -317,12 +317,9 @@ namespace TesseractOCR.InteropDotNet
         #endregion
 
         private static string GetLinuxArch(Architecture arch) =>
-            arch switch
-            {
-                Architecture.X86 => "x86",
-                Architecture.X64 => "x86_64",
-                Architecture.Arm64 => "aarch64",
-                _ => arch.ToString(),
-            };
+            arch == Architecture.X86 ? "x86" :
+            arch == Architecture.X64 ? "x86_64" :
+            arch == Architecture.Arm64 ? "aarch64" :
+            arch.ToString();
     }
 }
