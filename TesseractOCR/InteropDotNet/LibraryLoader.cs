@@ -52,8 +52,10 @@ namespace TesseractOCR.InteropDotNet
         ///     Uses an alternative search path
         /// </summary>
         public string CustomSearchPath { get; set; } =
+#if NET6_0_OR_GREATER
             RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? "/opt/homebrew/lib" :
             RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? $"/usr/lib/{GetLinuxArch(RuntimeInformation.ProcessArchitecture)}-linux-gnu" :
+#endif
             null;
         #endregion
 
@@ -316,10 +318,12 @@ namespace TesseractOCR.InteropDotNet
         }
         #endregion
 
+#if NET6_0_OR_GREATER
         private static string GetLinuxArch(Architecture arch) =>
             arch == Architecture.X86 ? "x86" :
             arch == Architecture.X64 ? "x86_64" :
             arch == Architecture.Arm64 ? "aarch64" :
             arch.ToString();
+#endif
     }
 }
