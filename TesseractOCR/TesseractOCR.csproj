@@ -29,8 +29,8 @@ which support the legacy engine, for example those from the tessdata repository.
     <PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 	<ItemGroup>
-		<Folder Include="x86\" />
 		<Folder Include="x64\" />
+		<Folder Include="x86\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -67,28 +67,10 @@ which support the legacy engine, for example those from the tessdata repository.
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Update="x64\tesseract.exe">
+	  <Content Update="x86\*.*">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
-	  <Content Update="x64\tesseract51.dll">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="x64\tesseract52.dll">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="x64\tesseract53.dll">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="x86\tesseract.exe">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="x86\tesseract51.dll">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="x86\tesseract52.dll">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="x86\tesseract53.dll">
+	  <Content Update="x86\*.*">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	</ItemGroup>
