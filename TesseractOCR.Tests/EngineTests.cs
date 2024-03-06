@@ -281,7 +281,7 @@ namespace Tesseract.Tests
                              "Word confidence: 0\r\n" +
                              "Word is from dictionary: False\r\n" +
                              "Word is numeric: False\r\n" +
-                             "Word language: Unknown\r\n").ReplaceLineEndings(), result.ToString());
+                             "Word language: Unknown\r\n").Replace("\r\n", Environment.NewLine), result.ToString());
         }
 
         [TestMethod]
