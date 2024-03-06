@@ -16,7 +16,7 @@ which support the legacy engine, for example those from the tessdata repository.
 		<PackageTags>Tesseract OCR text readable PDF</PackageTags>
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		<SignAssembly>false</SignAssembly>
-		<TargetFrameworks>netstandard21;net461;net48;net5.0;net6.0;net8.0</TargetFrameworks>
+		<TargetFrameworks>net461;net48;net6.0;net8.0</TargetFrameworks>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<FileVersion>5.3.6.0</FileVersion>
 		<AssemblyVersion>5.3.6.0</AssemblyVersion>
