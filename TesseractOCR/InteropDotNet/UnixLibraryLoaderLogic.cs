@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 //
 
+#if NET6_0_OR_GREATER
 using System;
 using System.Runtime.InteropServices;
 using TesseractOCR.Helpers;
@@ -32,10 +33,6 @@ namespace TesseractOCR.InteropDotNet
 {
     internal class UnixLibraryLoaderLogic : ILibraryLoaderLogic
     {
-        #region Consts
-        private const int RtldNow = 2;
-        #endregion
-
         #region Fields
         private static readonly string FileExtension = SystemManager.GetOperatingSystem() == OperatingSystem.MacOSX ? ".dylib" : ".so";
         #endregion
@@ -48,8 +45,8 @@ namespace TesseractOCR.InteropDotNet
             try
             {
                 Logger.LogInformation($"Trying to load native library '{fileName}'");
-                
-                libraryHandle = UnixLoadLibrary(fileName, RtldNow);
+
+                NativeLibrary.TryLoad(fileName, out libraryHandle);
                 
                 if (libraryHandle != IntPtr.Zero)
                     Logger.LogInformation($"Successfully loaded native library '{fileName}' with handle '{libraryHandle}'");
@@ -58,8 +55,7 @@ namespace TesseractOCR.InteropDotNet
             }
             catch (Exception exception)
             {
-                var lastError = UnixGetLastError();
-                Logger.LogError($"Failed to load native library '{fileName}', last error '{lastError}', inner Exception: {exception}");
+                Logger.LogError($"Failed to load native library '{fileName}', inner Exception: {exception}");
             }
 
             return libraryHandle;
@@ -69,37 +65,31 @@ namespace TesseractOCR.InteropDotNet
         #region FreeLibrary
         public bool FreeLibrary(IntPtr libraryHandle)
         {
-            return UnixFreeLibrary(libraryHandle) != 0;
+            NativeLibrary.Free(libraryHandle);
+            return true;
         }
         #endregion
 
         #region GetProcAddress
         public IntPtr GetProcAddress(IntPtr libraryHandle, string functionName)
         {
-            UnixGetLastError(); // Clearing previous errors
-
             try
             {
                 Logger.LogDebug($"Trying to load native function '{functionName}' from the library with handle '{libraryHandle}'");
             
-                var functionHandle = UnixGetProcAddress(libraryHandle, functionName);
-                var errorPointer = UnixGetLastError();
+                var functionHandle = NativeLibrary.GetExport(libraryHandle, functionName);
             
-                if (errorPointer != IntPtr.Zero)
-                    throw new Exception($"dlsym: {Marshal.PtrToStringAnsi(errorPointer)}");
-            
-                if (functionHandle != IntPtr.Zero && errorPointer == IntPtr.Zero)
+                if (functionHandle != IntPtr.Zero)
                     Logger.LogDebug($"Successfully loaded native function '{functionName}' with handle '{functionHandle}'");
                 else
-                    Logger.LogError($"Failed to load native function '{functionName}', with handle '{functionHandle}', error pointer '{errorPointer}'");
+                    Logger.LogError($"Failed to load native function '{functionName}', with handle '{functionHandle}'");
             
                 return functionHandle;
 
             }
             catch (Exception exception)
             {
-                var lastError = UnixGetLastError();
-                Logger.LogError($"Failed to load native function '{functionName}', last error '{lastError}', exception: {exception}");
+                Logger.LogError($"Failed to load native function '{functionName}', exception: {exception}");
                 return IntPtr.Zero;
             }
         }
@@ -119,19 +109,6 @@ namespace TesseractOCR.InteropDotNet
             return fileName;
         }
         #endregion
-
-        #region Native methods
-        [DllImport("libdl", EntryPoint = "dlopen")]
-        private static extern IntPtr UnixLoadLibrary(string fileName, int flags);
-
-        [DllImport("libdl", EntryPoint = "dlclose", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        private static extern int UnixFreeLibrary(IntPtr handle);
-
-        [DllImport("libdl", EntryPoint = "dlsym", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        private static extern IntPtr UnixGetProcAddress(IntPtr handle, string symbol);
-
-        [DllImport("libdl", EntryPoint = "dlerror", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        private static extern IntPtr UnixGetLastError();
-        #endregion
     }
 }
+#endif

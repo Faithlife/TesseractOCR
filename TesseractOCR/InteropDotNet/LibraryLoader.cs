@@ -74,6 +74,7 @@ namespace TesseractOCR.InteropDotNet
                         _instance = new LibraryLoader(new WindowsLibraryLoaderLogic());
                         break;
 
+#if NET6_0_OR_GREATER
                     case OperatingSystem.Unix:
                         Logger.LogInformation("Current OS is Unix");
                         _instance = new LibraryLoader(new UnixLibraryLoaderLogic());
@@ -83,6 +84,7 @@ namespace TesseractOCR.InteropDotNet
                         Logger.LogInformation("Current OS is MacOSX");
                         _instance = new LibraryLoader(new UnixLibraryLoaderLogic());
                         break;
+#endif
 
                     case OperatingSystem.Unknown:
                     default:
