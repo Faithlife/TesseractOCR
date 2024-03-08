@@ -19,6 +19,7 @@
     	<GenerateDocumentationFile>true</GenerateDocumentationFile>
     	<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     	<RepositoryType>git</RepositoryType>
+		<DebugSymbols>true</DebugSymbols>
 	</PropertyGroup>
 	<ItemGroup>
 		<Folder Include="x64\" />
@@ -28,11 +29,11 @@
 	<ItemGroup>
 		<Content Include="x64/**/*.*" copyToOutput="true">
 			<IncludeInPackage>true</IncludeInPackage>
-			<PackagePath>x64;lib</PackagePath>
+			<PackagePath>runtimes\win-x64\native</PackagePath>
 		</Content>
 		<Content Include="x86/**/*.*" copyToOutput="true">
 			<IncludeInPackage>true</IncludeInPackage>
-			<PackagePath>x86;lib</PackagePath>
+			<PackagePath>runtimes\win-x86\native</PackagePath>
 		</Content>
 	</ItemGroup>
 
@@ -61,6 +62,7 @@
 	<ItemGroup>
 	  <Content Update="x86\*.*">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  
 	  </Content>
 	  <Content Update="x86\*.*">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>

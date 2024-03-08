@@ -131,7 +131,10 @@ namespace TesseractOCR.InteropDotNet
                 
                 Logger.LogInformation($"Current platform is {platformName}");
 
-                var dllHandle = CheckCodeBase(fileName, platformName);
+                var dllHandle = CheckExecutingAssemblyDomain(fileName, Path.Combine("runtimes", $"{GetFullPlatformName()}-{platformName}", "native"));
+                
+                if (dllHandle == IntPtr.Zero)
+                    dllHandle = CheckCodeBase(fileName, platformName);
                 
                 if (dllHandle == IntPtr.Zero)
                     dllHandle = CheckExecutingAssemblyDomain(fileName, platformName);
@@ -317,6 +320,12 @@ namespace TesseractOCR.InteropDotNet
             return _logic.FixUpLibraryName(fileName);
         }
         #endregion
+
+        private static string GetFullPlatformName() =>
+            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "win" :
+            RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "linux" :
+            RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? "osx" :
+            null;
 
 #if NET6_0_OR_GREATER
         private static string GetLinuxArch(Architecture arch) =>
