@@ -143,6 +143,9 @@ namespace TesseractOCR.InteropDotNet
                     dllHandle = CheckCurrentAppDomain(fileName, platformName);
                 
                 if (dllHandle == IntPtr.Zero)
+                    dllHandle = CheckCurrentAppDomain(fileName, "");
+                
+                if (dllHandle == IntPtr.Zero)
                     dllHandle = CheckWorkingDirectory(fileName, platformName);
 
                 if (dllHandle == IntPtr.Zero)
